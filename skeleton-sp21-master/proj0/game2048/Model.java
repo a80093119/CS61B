@@ -113,6 +113,21 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        /* col and row indexes
+        3
+        2
+        1
+        0 1 2 3
+        */
+        for (int col = 0; col < board.size(); col++){
+            for (int row = board.size()-1; row < board.size(); row++){
+                Tile t = board.tile(col, row);
+                if (t != null){
+
+                }
+            }
+        }
+
 
         checkGameOver();
         if (changed) {
@@ -175,6 +190,24 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        // 1. There is at least one empty space on the board.
+        if (emptySpaceExists(b)) return true;
+        else {
+            //declare up/down/left/right
+            int[] moveDircol = {0, 0, -1, 1};
+            int[] moveDirrow = {-1, 1, 0, 0};
+            for (int col = 0; col < b.size(); col++){
+                for (int row = 0; row < b.size(); row++){
+                    for (int move = 0; move < moveDircol.length; move++){
+                        int tilecol = col + moveDircol[move];
+                        int tilerow = row + moveDirrow[move];
+                        if ((tilecol >= 0) && (tilecol < b.size()) && (tilerow >= 0) && (tilerow < b.size())) {
+                            if (b.tile(col, row).value() == b.tile(tilecol, tilerow).value()) return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
